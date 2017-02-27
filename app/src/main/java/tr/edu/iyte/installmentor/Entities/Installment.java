@@ -5,6 +5,7 @@ import java.util.Date;
 public class Installment {
     private float amount;
     private Date date;
+    private long cardId;
 
     public Installment(float amount, Date date) {
         this.amount = amount;
