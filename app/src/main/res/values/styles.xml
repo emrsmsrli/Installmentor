@@ -8,4 +8,8 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="AMOLEDTheme" parent="ThemeOverlay.AppCompat.Dark">
+        <!-- TODO design this -->
+    </style>
+
 </resources>
