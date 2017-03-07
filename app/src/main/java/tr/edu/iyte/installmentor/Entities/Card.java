@@ -6,24 +6,29 @@ public class Card {
     private static final int TYPE_MASTER_CARD = 0;
     private static final int TYPE_VISA = 1;
 
-    private String cardNumber;
-    private int cardType;
-    private String cardHolderName;
+    private long id;
+    private String number;
+    private int type;
+    private String holderName;
 
-    public Card(String cardNumber, String cardHolderName) {
-        this.cardHolderName = cardHolderName;
-        this.cardNumber = cardNumber;
-        setType();
+    public Card(String number, String holderName) {
+        this(0, number, holderName);
+    }
+
+    public Card(long id, String number, String holderName) {
+        this.id = id;
+        setHolderName(holderName);
+        setNumber(number);
     }
 
     private void setType() {
-        int firstTwo = Integer.parseInt(cardNumber.substring(0, 2));
+        int firstTwo = Integer.parseInt(number.substring(0, 2));
         if(firstTwo / 10 == 4)
-            cardType = TYPE_VISA;
+            type = TYPE_VISA;
         else if(firstTwo > 50 && firstTwo < 56)
-            cardType = TYPE_MASTER_CARD;
+            type = TYPE_MASTER_CARD;
         else
-            cardType = TYPE_UNKNOWN;
+            type = TYPE_UNKNOWN;
 
     }
 
@@ -33,23 +38,36 @@ public class Card {
             return false;
 
         int sum = 0;
-        for(int i = 0; i < cnLength; i += 2) {
-            sum += Character.getNumericValue(i) * 2;
-            sum += Character.getNumericValue(i + 1);
+        for(int i = cnLength - 1; i >= 0; i -= 2) {
+            sum += Character.getNumericValue(i - 1) * 2;
+            sum += Character.getNumericValue(i);
         }
 
         return sum % 10 == 0;
     }
 
-    public int getCardType() {
-        return cardType;
+    public long getId() {
+        return id;
     }
 
-    public String getCardHolderName() {
-        return cardHolderName;
+    public int getType() {
+        return type;
     }
 
-    public String getCardNumber() {
-        return cardNumber;
+    public String getHolderName() {
+        return holderName;
+    }
+
+    public void setHolderName(String holderName) {
+        this.holderName = holderName;
+    }
+
+    public String getNumber() {
+        return number;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
+        setType();
     }
 }
