@@ -11,27 +11,28 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="tr.edu.iyte.installmentor.MainActivity">
 
-   <ScrollView
+    <ScrollView
         android:id="@+id/card_scroll_view"
-        android:layout_marginBottom="50dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginBottom="50dp">
 
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <TextView
-                android:text="asdasdasdadsdasd"
-                android:layout_margin="20dp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:text="asdasdasdadsdasd" />
+
         </android.support.v7.widget.CardView>
     </ScrollView>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
-        android:layout_gravity="end|bottom"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom" />
 </FrameLayout>
