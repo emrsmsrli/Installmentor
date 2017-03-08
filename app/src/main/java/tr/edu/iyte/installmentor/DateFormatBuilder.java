@@ -1,7 +1,9 @@
 package tr.edu.iyte.installmentor;
 
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 import java.util.Date;
@@ -46,19 +48,32 @@ public class DateFormatBuilder {
     }
 
     public String buildFormat(Date date) {
-        initFormat();
+        //initFormat();
         SimpleDateFormat dateFormat = new SimpleDateFormat(TextUtils.isEmpty(format) ? DEFAULT_FORMAT : format.trim(), Locale.getDefault());
         return dateFormat.format(date);
     }
 
-    public void includeTime(boolean includeSeconds) {
+    public DateFormatBuilder includeTime(boolean includeSeconds) {
         isTimeIncluded = true;
         areSecondsIncluded = includeSeconds;
+        return this;
     }
 
-    public void includeDate(boolean includeDayInWeek) {
+    public DateFormatBuilder includeDate(boolean includeDayInWeek) {
         isDateIncluded = true;
         isDayInWeekIncluded = includeDayInWeek;
+        return this;
+    }
+
+    @Nullable
+    public static Date parse(String date) {
+        try {
+            //TODO implement custom format parsing
+            SimpleDateFormat dateFormat = new SimpleDateFormat(DEFAULT_FORMAT , Locale.getDefault());
+            return dateFormat.parse(date);
+        } catch(ParseException e) {
+            return null;
+        }
     }
 
     public static DateFormatBuilder getBuilder() {
