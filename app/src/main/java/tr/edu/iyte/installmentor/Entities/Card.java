@@ -1,7 +1,7 @@
 package tr.edu.iyte.installmentor.Entities;
 
 public class Card {
-    private static final int CARD_NUMBER_LENGTH = 16;
+    private static final int CARD_NUMBER_LENGTH = 16;   // FIXME: 08/03/2017 maybe 18?
     private static final int TYPE_UNKNOWN = -1;
     private static final int TYPE_MASTER_CARD = 0;
     private static final int TYPE_VISA = 1;
