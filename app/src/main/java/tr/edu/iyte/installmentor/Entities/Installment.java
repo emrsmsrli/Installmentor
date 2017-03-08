@@ -4,16 +4,18 @@ import java.util.Date;
 
 public class Installment {
     private long id;
+    private long productId;
     private long cardId;
     private float amount;
     private Date date;
 
-    public Installment(long cardId, float amount, Date date) {
-        this(0, cardId, amount, date);
+    public Installment(long productId, long cardId, float amount, Date date) {
+        this(0, productId, cardId, amount, date);
     }
 
-    public Installment(long id, long cardId, float amount, Date date) {
+    public Installment(long id, long productId, long cardId, float amount, Date date) {
         this.id = id;
+        this.productId = productId;
         this.cardId = cardId;
         this.amount = amount;
         this.date = date;
@@ -41,5 +43,9 @@ public class Installment {
 
     public long getId() {
         return id;
+    }
+
+    public long getProductId() {
+        return productId;
     }
 }
