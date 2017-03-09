@@ -2,8 +2,7 @@ package tr.edu.iyte.installmentor.Entities;
 
 import java.util.Date;
 
-public class Installment {
-    private long id;
+public class Installment extends Entity {
     private long productId;
     private long cardId;
     private float amount;
@@ -17,8 +16,8 @@ public class Installment {
         this.id = id;
         this.productId = productId;
         this.cardId = cardId;
-        this.amount = amount;
-        this.date = date;
+        setAmount(amount);
+        setDate(date);
     }
 
     public Date getDate() {

@@ -1,24 +1,25 @@
 package tr.edu.iyte.installmentor.Entities;
 
-public class Card {
+public class Card extends Entity {
     private static final int CARD_NUMBER_LENGTH = 16;   // FIXME: 08/03/2017 maybe 18?
     private static final int TYPE_UNKNOWN = -1;
     private static final int TYPE_MASTER_CARD = 0;
-    private static final int TYPE_VISA = 1;
+    public static final int TYPE_VISA = 1;
 
-    private long id;
     private String number;
     private int type;
     private String holderName;
+    private String bankName;
 
-    public Card(String number, String holderName) {
-        this(0, number, holderName);
+    public Card(String number, String holderName, String bankName) {
+        this(0, number, holderName, bankName);
     }
 
-    public Card(long id, String number, String holderName) {
+    public Card(long id, String number, String holderName, String bankName) {
         this.id = id;
         setHolderName(holderName);
         setNumber(number);
+        setBankName(bankName);
     }
 
     private void setType() {
@@ -68,6 +69,15 @@ public class Card {
 
     public void setNumber(String number) {
         this.number = number;
-        setType();
+        if(number != null)
+            setType();
+    }
+
+    public String getBankName() {
+        return bankName;
+    }
+
+    public void setBankName(String bankName) {
+        this.bankName = bankName;
     }
 }

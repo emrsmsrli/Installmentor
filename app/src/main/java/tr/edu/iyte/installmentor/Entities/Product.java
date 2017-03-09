@@ -2,8 +2,7 @@ package tr.edu.iyte.installmentor.Entities;
 
 import java.util.Date;
 
-public class Product {
-    private long id;
+public class Product extends Entity {
     private long cardId;
     private String description;
     private Date buyDate;
@@ -15,8 +14,8 @@ public class Product {
     public Product(long id, long cardId, String description, Date buyDate) {
         this.id = id;
         this.cardId = cardId;
-        this.description = description;
-        this.buyDate = buyDate;
+        setDescription(description);
+        setBuyDate(buyDate);
     }
 
     public long getId() {
@@ -31,7 +30,15 @@ public class Product {
         return description;
     }
 
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public Date getBuyDate() {
         return buyDate;
+    }
+
+    public void setBuyDate(Date buyDate) {
+        this.buyDate = buyDate;
     }
 }
