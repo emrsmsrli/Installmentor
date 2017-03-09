@@ -9,6 +9,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import tr.edu.iyte.installmentor.Entities.Card;
@@ -30,17 +31,17 @@ public class CardDatabaseHelper extends SQLiteOpenHelper {
     private static final String DB_NAME = "carddb";
     private static final String ID = "_id";
 
-    private static final String CARD_TABLE_NAME = "CardTable";
+    private static final String CARD_TABLE_NAME = "cards";
     private static final String CARD_NUMBER = "card_number";
     private static final String CARD_BANK_NAME = "card_bankname";
     private static final String CARD_HOLDER_NAME = "card_holdername";
 
-    private static final String PRODUCT_TABLE_NAME = "ProductTable";
+    private static final String PRODUCT_TABLE_NAME = "products";
     private static final String PRODUCT_CARD_ID = "pro_card";
     private static final String PRODUCT_DESCRIPTION = "pro_des";
     private static final String PRODUCT_BUY_DATE = "pro_buydate";
 
-    private static final String INSTALLMENT_TABLE_NAME = "InstallmentTable";
+    private static final String INSTALLMENT_TABLE_NAME = "installments";
     private static final String INSTALLMENT_PRODUCT_ID = "ins_pro";
     private static final String INSTALLMENT_CARD_ID = "ins_card";
     private static final String INSTALLMENT_AMOUNT = "ins_amount";
@@ -71,38 +72,38 @@ public class CardDatabaseHelper extends SQLiteOpenHelper {
                 ID,                 //INTEGER AUTOINCREMENT PRIMARY KEY
                 CARD_NUMBER,        //TEXT
                 CARD_HOLDER_NAME,   //TEXT
-                CARD_BANK_NAME,
-                CARD_NUMBER));   //TEXT
+                CARD_BANK_NAME,     //TEXT
+                CARD_NUMBER));
 
         sqLiteDatabase.execSQL(String.format("CREATE TABLE %s(" +
                         "%s INTEGER PRIMARY KEY, " +
-                        "%s TEXT, " +
-                        "%s TEXT, " +
                         "%s INTEGER, " +
+                        "%s TEXT, " +
+                        "%s TEXT, " +
                         "FOREIGN KEY(%s) REFERENCES %s(%s) ON DELETE CASCADE);",
                 PRODUCT_TABLE_NAME,
                 ID,                     //INTEGER AUTOINCREMENT PRIMARY KEY
+                PRODUCT_CARD_ID,        //INTEGER, FOREIGN KEY, to cards
                 PRODUCT_DESCRIPTION,    //TEXT
                 PRODUCT_BUY_DATE,       //TEXT
-                PRODUCT_CARD_ID,        //INTEGER, FOREIGN KEY, to cards
                 PRODUCT_CARD_ID,
                 CARD_TABLE_NAME,
                 ID));
 
         sqLiteDatabase.execSQL(String.format("CREATE TABLE %s(" +
                         "%s INTEGER PRIMARY KEY, " +
+                        "%s INTEGER, " +
+                        "%s INTEGER, " +
                         "%s REAL, " +
                         "%s TEXT, " +
-                        "%s INTEGER, " +
-                        "%s INTEGER, " +
                         "FOREIGN KEY(%s) REFERENCES %s(%s) ON DELETE CASCADE, " +
                         "FOREIGN KEY(%s) REFERENCES %s(%s) ON DELETE CASCADE);",
                 INSTALLMENT_TABLE_NAME,
                 ID,                     //INTEGER AUTOINCREMENT PRIMARY KEY,
-                INSTALLMENT_AMOUNT,     //REAL
-                INSTALLMENT_DATE,       //TEXT
                 INSTALLMENT_PRODUCT_ID, //INTEGER, FOREIGN KEY, to products
                 INSTALLMENT_CARD_ID,    //INTEGER, FOREIGN KEY, to cards
+                INSTALLMENT_AMOUNT,     //REAL
+                INSTALLMENT_DATE,       //TEXT
                 INSTALLMENT_PRODUCT_ID,
                 PRODUCT_TABLE_NAME,
                 ID,
@@ -110,8 +111,6 @@ public class CardDatabaseHelper extends SQLiteOpenHelper {
                 CARD_TABLE_NAME,
                 ID));
     }
-
-    // TODO: 22/02/2017 implement get functions
 
     public boolean addCard(Card card) {
         long id = db.insert(CARD_TABLE_NAME, null, initCard(card));
@@ -179,10 +178,36 @@ public class CardDatabaseHelper extends SQLiteOpenHelper {
             cards = new ArrayList<>();
             while(c.moveToNext()) {
                 cards.add(new Card(c.getLong(0), c.getString(1), c.getString(2), c.getString(3)));
-                Log.i(TAG, "getCards: " + c.getLong(0));
             }
         }
+        log(cards.size(), Card.class, MODE_READ);
         return cards;
+    }
+
+    public List<Product> getAllProducts() {
+        ArrayList<Product> products;
+        try(Cursor c = db.query(PRODUCT_TABLE_NAME, null, null, null, null, null, null)) {
+            products = new ArrayList<>();
+            while(c.moveToNext()) {
+                Date d = DateFormatBuilder.parse(c.getString(3));
+                products.add(new Product(c.getLong(0), c.getLong(1), c.getString(2), d));
+            }
+        }
+        log(products.size(), Product.class, MODE_READ);
+        return products;
+    }
+
+    public List<Installment> getAllInstallments() {
+        ArrayList<Installment> installments;
+        try(Cursor c = db.query(INSTALLMENT_TABLE_NAME, null, null, null, null, null, null)) {
+            installments = new ArrayList<>();
+            while(c.moveToNext()) {
+                Date d = DateFormatBuilder.parse(c.getString(4));
+                installments.add(new Installment(c.getLong(0), c.getLong(1), c.getLong(2), c.getFloat(3), d));
+            }
+        }
+        log(installments.size(), Installment.class, MODE_READ);
+        return installments;
     }
 
     private ContentValues initCard(Card card) {
@@ -248,6 +273,7 @@ public class CardDatabaseHelper extends SQLiteOpenHelper {
                     Log.i(TAG, "add" + cn + ": new " + cn + " created, id: " + i);
                 break;
             case MODE_READ:
+                Log.i(TAG, "get" + cn + ": Read count: " + i);
                 break;
             case MODE_UPDATE:
                 if(i <= 0)
