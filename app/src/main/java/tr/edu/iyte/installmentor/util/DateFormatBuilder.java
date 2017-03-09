@@ -1,4 +1,4 @@
-package tr.edu.iyte.installmentor;
+package tr.edu.iyte.installmentor.util;
 
 import android.support.annotation.Nullable;
 import android.text.TextUtils;

@@ -1,4 +1,4 @@
-package tr.edu.iyte.installmentor;
+package tr.edu.iyte.installmentor.database;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -12,9 +12,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import tr.edu.iyte.installmentor.Entities.Card;
-import tr.edu.iyte.installmentor.Entities.Installment;
-import tr.edu.iyte.installmentor.Entities.Product;
+import tr.edu.iyte.installmentor.database.entities.Card;
+import tr.edu.iyte.installmentor.database.entities.Installment;
+import tr.edu.iyte.installmentor.database.entities.Product;
+import tr.edu.iyte.installmentor.util.DateFormatBuilder;
 
 public class CardDatabaseHelper extends SQLiteOpenHelper {
     public interface DatabaseOpenedListener {
@@ -294,6 +295,8 @@ public class CardDatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
-
+        Log.w(TAG, "onUpgrade: DATABASE UPGRADE, ALL DATA WILL BE DESTROYED");
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS *");
+        onCreate(sqLiteDatabase);
     }
 }

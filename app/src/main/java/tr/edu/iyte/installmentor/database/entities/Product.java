@@ -1,4 +1,4 @@
-package tr.edu.iyte.installmentor.Entities;
+package tr.edu.iyte.installmentor.database.entities;
 
 import java.util.Date;
 

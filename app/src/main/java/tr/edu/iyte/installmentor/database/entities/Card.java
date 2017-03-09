@@ -1,10 +1,11 @@
-package tr.edu.iyte.installmentor.Entities;
+package tr.edu.iyte.installmentor.database.entities;
 
 public class Card extends Entity {
     private static final int CARD_NUMBER_LENGTH = 16;   // FIXME: 08/03/2017 maybe 18?
-    private static final int TYPE_UNKNOWN = -1;
-    private static final int TYPE_MASTER_CARD = 0;
+    public static final int TYPE_UNKNOWN = -1;
+    public static final int TYPE_MASTER_CARD = 0;
     public static final int TYPE_VISA = 1;
+    public static final int TYPE_MAESTRO = 2;
 
     private String number;
     private int type;
@@ -20,17 +21,6 @@ public class Card extends Entity {
         setHolderName(holderName);
         setNumber(number);
         setBankName(bankName);
-    }
-
-    private void setType() {
-        int firstTwo = Integer.parseInt(number.substring(0, 2));
-        if(firstTwo / 10 == 4)
-            type = TYPE_VISA;
-        else if(firstTwo > 50 && firstTwo < 56)
-            type = TYPE_MASTER_CARD;
-        else
-            type = TYPE_UNKNOWN;
-
     }
 
     public static boolean isCardNumberValid(String cardNumber) {
@@ -53,6 +43,23 @@ public class Card extends Entity {
 
     public int getType() {
         return type;
+    }
+
+    private void setType() {
+        int firstTwo = Integer.parseInt(number.substring(0, 2));
+        if(firstTwo / 10 == 4)
+            type = TYPE_VISA;
+        else if(firstTwo == 50
+                || firstTwo == 58
+                || firstTwo == 63
+                || firstTwo == 67)
+            type = TYPE_MAESTRO;
+        else if(firstTwo > 50
+                && firstTwo < 56)
+            type = TYPE_MASTER_CARD;
+        else
+            type = TYPE_UNKNOWN;
+
     }
 
     public String getHolderName() {
