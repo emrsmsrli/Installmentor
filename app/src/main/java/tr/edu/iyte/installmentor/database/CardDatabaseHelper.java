@@ -255,7 +255,7 @@ public class CardDatabaseHelper extends SQLiteOpenHelper {
             @Override
             protected void onPostExecute(SQLiteDatabase sqLiteDatabase) {
                 if(sqLiteDatabase == null || !sqLiteDatabase.isOpen())
-                    Log.w(TAG, "openDatabase: Couldn't open database");
+                    Log.e(TAG, "openDatabase: Couldn't open database");
                 else
                     db = sqLiteDatabase;
 
@@ -269,7 +269,7 @@ public class CardDatabaseHelper extends SQLiteOpenHelper {
         switch(mode) {
             case MODE_CREATE:
                 if(i < 0)
-                    Log.w(TAG, "add" + cn + ": Error creating " + cn);
+                    Log.e(TAG, "add" + cn + ": Error creating " + cn);
                 else
                     Log.i(TAG, "add" + cn + ": new " + cn + " created, id: " + i);
                 break;
@@ -278,13 +278,13 @@ public class CardDatabaseHelper extends SQLiteOpenHelper {
                 break;
             case MODE_UPDATE:
                 if(i <= 0)
-                    Log.i(TAG, "edit" + cn + ": Couldn't edit " + cn);
+                    Log.e(TAG, "edit" + cn + ": Couldn't edit " + cn);
                 else
                     Log.i(TAG, "edit" + cn + ": " + cn + " edited");
                 break;
             case MODE_DELETE:
                 if(i <= 0)
-                    Log.i(TAG, "delete" + cn + ": Couldn't delete " + cn);
+                    Log.e(TAG, "delete" + cn + ": Couldn't delete " + cn);
                 else
                     Log.i(TAG, "delete" + cn + ": " + cn + " deleted");
                 break;
