@@ -2,13 +2,16 @@ package tr.edu.iyte.installmentor.database.entities;
 
 public class Card extends Entity {
     private static final int CARD_NUMBER_LENGTH = 16;   // FIXME: 08/03/2017 maybe 18?
-    public static final int TYPE_UNKNOWN = -1;
-    public static final int TYPE_MASTER_CARD = 0;
-    public static final int TYPE_VISA = 1;
-    public static final int TYPE_MAESTRO = 2;
+
+    public enum CardType {
+        UNKNOWN,
+        MASTER_CARD,
+        VISA,
+        MAESTRO
+    }
 
     private String number;
-    private int type;
+    private CardType type;
     private String holderName;
     private String bankName;
 
@@ -41,24 +44,24 @@ public class Card extends Entity {
         return id;
     }
 
-    public int getType() {
+    public CardType getType() {
         return type;
     }
 
     private void setType() {
         int firstTwo = Integer.parseInt(number.substring(0, 2));
         if(firstTwo / 10 == 4)
-            type = TYPE_VISA;
+            type = CardType.VISA;
         else if(firstTwo == 50
                 || firstTwo == 58
                 || firstTwo == 63
                 || firstTwo == 67)
-            type = TYPE_MAESTRO;
+            type = CardType.MAESTRO;
         else if(firstTwo > 50
                 && firstTwo < 56)
-            type = TYPE_MASTER_CARD;
+            type = CardType.MASTER_CARD;
         else
-            type = TYPE_UNKNOWN;
+            type = CardType.UNKNOWN;
 
     }
 
