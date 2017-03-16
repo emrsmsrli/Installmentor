@@ -1,13 +1,13 @@
 package tr.edu.iyte.installmentor.database.entities;
 
 public class Card extends Entity {
-    private static final int CARD_NUMBER_LENGTH = 16;   // FIXME: 08/03/2017 maybe 18?
+    private static final int CARD_NUMBER_LENGTH = 18;
 
     public enum CardType {
         UNKNOWN,
         MASTER_CARD,
         VISA,
-        MAESTRO
+        MAESTRO // TODO: 16/03/2017 add more card types
     }
 
     private String number;
@@ -28,13 +28,15 @@ public class Card extends Entity {
 
     public static boolean isCardNumberValid(String cardNumber) {
         int cnLength = cardNumber.length();
-        if(cnLength != CARD_NUMBER_LENGTH)
+        if(cnLength != CARD_NUMBER_LENGTH) // TODO: 16/03/2017 necessary?
             return false;
+
+        String cardN = cardNumber.replaceAll("\\s*", "");
 
         int sum = 0;
         for(int i = cnLength - 1; i >= 0; i -= 2) {
-            sum += Character.getNumericValue(i - 1) * 2;
-            sum += Character.getNumericValue(i);
+            sum += Character.getNumericValue(cardN.codePointAt(i - 1)) * 2;
+            sum += Character.getNumericValue(cardN.codePointAt(i));
         }
 
         return sum % 10 == 0;
