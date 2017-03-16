@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
+    android:clipToPadding="false"
     tools:context="tr.edu.iyte.installmentor.ui.MainActivity">
 
     <android.support.v7.widget.RecyclerView
@@ -16,9 +14,18 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <include layout="@layout/card_cview"
-             android:id="@+id/cardview"
-             android:layout_height="200dp"
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:visibility="invisible"
+        android:layout_margin="16dp"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_gravity="bottom|end"
+        app:backgroundTint="@color/colorPrimary" />
+
+    <include layout="@layout/loading"
+             android:id="@+id/loading"
+             android:layout_height="match_parent"
              android:layout_width="match_parent" />
 
 </FrameLayout>
