@@ -198,9 +198,48 @@ public class CardDatabaseHelper extends SQLiteOpenHelper {
         return products;
     }
 
+    public List<Product> getProductsOf(Card card) {
+        ArrayList<Product> products;
+        try(Cursor c = db.query(PRODUCT_TABLE_NAME, null, "? = ?", new String[]{PRODUCT_CARD_ID, String.valueOf(card.getId())}, null, null, null)) {
+            products = new ArrayList<>();
+            while(c.moveToNext()) {
+                Date d = DateFormatBuilder.parse(c.getString(3));
+                products.add(new Product(c.getLong(0), c.getLong(1), c.getString(2), d));
+            }
+        }
+        log(products.size(), Product.class, MODE_READ);
+        return products;
+    }
+
     public List<Installment> getAllInstallments() {
         ArrayList<Installment> installments;
         try(Cursor c = db.query(INSTALLMENT_TABLE_NAME, null, null, null, null, null, null)) {
+            installments = new ArrayList<>();
+            while(c.moveToNext()) {
+                Date d = DateFormatBuilder.parse(c.getString(4));
+                installments.add(new Installment(c.getLong(0), c.getLong(1), c.getLong(2), c.getFloat(3), d));
+            }
+        }
+        log(installments.size(), Installment.class, MODE_READ);
+        return installments;
+    }
+
+    public List<Installment> getAllInstallmentsOf(Card card) {
+        ArrayList<Installment> installments;
+        try(Cursor c = db.query(INSTALLMENT_TABLE_NAME, null, "? = ?", new String[]{INSTALLMENT_CARD_ID, String.valueOf(card.getId())}, null, null, null)) {
+            installments = new ArrayList<>();
+            while(c.moveToNext()) {
+                Date d = DateFormatBuilder.parse(c.getString(4));
+                installments.add(new Installment(c.getLong(0), c.getLong(1), c.getLong(2), c.getFloat(3), d));
+            }
+        }
+        log(installments.size(), Installment.class, MODE_READ);
+        return installments;
+    }
+
+    public List<Installment> getAllInstallmentsOf(Product product) {
+        ArrayList<Installment> installments;
+        try(Cursor c = db.query(INSTALLMENT_TABLE_NAME, null, "? = ?", new String[]{INSTALLMENT_PRODUCT_ID, String.valueOf(product.getId())}, null, null, null)) {
             installments = new ArrayList<>();
             while(c.moveToNext()) {
                 Date d = DateFormatBuilder.parse(c.getString(4));
