@@ -3,12 +3,14 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
 
+
     <dimen name="card_view_startend_margin">20dp</dimen>
     <dimen name="card_view_startend_extra_margin">50dp</dimen>
     <dimen name="card_view_card_type_margin">20dp</dimen>
     <dimen name="card_view_topbottom_margin">30dp</dimen>
     <dimen name="card_view_bank_top_margin">25dp</dimen>
-    <dimen name="card_view_bank_name_text_size">30sp</dimen>
+
+    <dimen name="card_view_bank_name_text_size">28sp</dimen>
     <dimen name="card_view_card_number_text_size">20sp</dimen>
     <dimen name="card_view_holder_name_text_size">16sp</dimen>
 </resources>
