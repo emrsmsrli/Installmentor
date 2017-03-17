@@ -48,7 +48,7 @@ public class DateFormatBuilder {
     }
 
     public String buildFormat(Date date) {
-        //initFormat();
+        //initFormat(); FIXME: 17/03/2017
         SimpleDateFormat dateFormat = new SimpleDateFormat(TextUtils.isEmpty(format) ? DEFAULT_FORMAT : format.trim(), Locale.getDefault());
         return dateFormat.format(date);
     }
