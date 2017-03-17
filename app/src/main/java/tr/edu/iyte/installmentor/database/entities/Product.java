@@ -6,8 +6,8 @@ public class Product extends Entity {
     private long cardId;
     private String description;
     private Date buyDate;
-    private long totalAmount;
-    private long remainingAmount;
+    private float totalAmount;
+    private float remainingAmount;
 
     public Product(long cardId, long totalAmount, String description, Date buyDate) {
         this(0, cardId, totalAmount, description, buyDate);
@@ -45,19 +45,19 @@ public class Product extends Entity {
         this.buyDate = buyDate;
     }
 
-    public long getTotalAmount() {
+    public float getTotalAmount() {
         return totalAmount;
     }
 
-    public void setTotalAmount(long totalAmount) {
+    public void setTotalAmount(float totalAmount) {
         this.totalAmount = totalAmount;
     }
 
-    public long getRemainingAmount() {
+    public float getRemainingAmount() {
         return remainingAmount;
     }
 
-    public void setRemainingAmount(long remainingAmount) {
+    public void setRemainingAmount(float remainingAmount) {
         this.remainingAmount = remainingAmount;
     }
 }
