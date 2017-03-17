@@ -41,6 +41,7 @@ public class CardDatabaseHelper extends SQLiteOpenHelper {
     private static final String PRODUCT_CARD_ID = "pro_card";
     private static final String PRODUCT_DESCRIPTION = "pro_des";
     private static final String PRODUCT_BUY_DATE = "pro_buydate";
+    private static final String PRODUCT_TOTAL_AMOUNT = "pro_buydate";
 
     private static final String INSTALLMENT_TABLE_NAME = "installments";
     private static final String INSTALLMENT_PRODUCT_ID = "ins_pro";
@@ -79,12 +80,14 @@ public class CardDatabaseHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(String.format("CREATE TABLE %s(" +
                         "%s INTEGER PRIMARY KEY, " +
                         "%s INTEGER, " +
+                        "%s REAL, " +
                         "%s TEXT, " +
                         "%s TEXT, " +
                         "FOREIGN KEY(%s) REFERENCES %s(%s) ON DELETE CASCADE);",
                 PRODUCT_TABLE_NAME,
                 ID,                     //INTEGER AUTOINCREMENT PRIMARY KEY
                 PRODUCT_CARD_ID,        //INTEGER, FOREIGN KEY, to cards
+                PRODUCT_TOTAL_AMOUNT,   //REAL
                 PRODUCT_DESCRIPTION,    //TEXT
                 PRODUCT_BUY_DATE,       //TEXT
                 PRODUCT_CARD_ID,
@@ -190,8 +193,8 @@ public class CardDatabaseHelper extends SQLiteOpenHelper {
         try(Cursor c = db.query(PRODUCT_TABLE_NAME, null, null, null, null, null, null)) {
             products = new ArrayList<>();
             while(c.moveToNext()) {
-                Date d = DateFormatBuilder.parse(c.getString(3));
-                products.add(new Product(c.getLong(0), c.getLong(1), c.getString(2), d));
+                Date d = DateFormatBuilder.parse(c.getString(4));
+                products.add(new Product(c.getLong(0), c.getLong(1), c.getLong(2), c.getString(3), d));
             }
         }
         log(products.size(), Product.class, MODE_READ);
@@ -203,8 +206,8 @@ public class CardDatabaseHelper extends SQLiteOpenHelper {
         try(Cursor c = db.query(PRODUCT_TABLE_NAME, null, "? = ?", new String[]{PRODUCT_CARD_ID, String.valueOf(card.getId())}, null, null, null)) {
             products = new ArrayList<>();
             while(c.moveToNext()) {
-                Date d = DateFormatBuilder.parse(c.getString(3));
-                products.add(new Product(c.getLong(0), c.getLong(1), c.getString(2), d));
+                Date d = DateFormatBuilder.parse(c.getString(4));
+                products.add(new Product(c.getLong(0), c.getLong(1), c.getLong(2), c.getString(3), d));
             }
         }
         log(products.size(), Product.class, MODE_READ);
@@ -265,6 +268,7 @@ public class CardDatabaseHelper extends SQLiteOpenHelper {
                 .buildFormat(product.getBuyDate());
         ContentValues cv = new ContentValues();
         cv.put(PRODUCT_CARD_ID, product.getCardId());
+        cv.put(PRODUCT_TOTAL_AMOUNT, product.getTotalAmount());
         cv.put(PRODUCT_DESCRIPTION, product.getDescription());
         cv.put(PRODUCT_BUY_DATE, dateString);
         return cv;
