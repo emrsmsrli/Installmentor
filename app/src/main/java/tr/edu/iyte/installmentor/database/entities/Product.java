@@ -9,11 +9,11 @@ public class Product extends Entity {
     private float totalAmount;
     private float remainingAmount;
 
-    public Product(long cardId, long totalAmount, String description, Date buyDate) {
+    public Product(long cardId, float totalAmount, String description, Date buyDate) {
         this(0, cardId, totalAmount, description, buyDate);
     }
 
-    public Product(long id, long cardId, long totalAmount, String description, Date buyDate) {
+    public Product(long id, long cardId, float totalAmount, String description, Date buyDate) {
         this.id = id;
         this.cardId = cardId;
         setTotalAmount(totalAmount);
