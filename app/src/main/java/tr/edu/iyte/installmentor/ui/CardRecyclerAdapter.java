@@ -1,4 +1,4 @@
-package tr.edu.iyte.installmentor;
+package tr.edu.iyte.installmentor.ui;
 
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import tr.edu.iyte.installmentor.R;
 import tr.edu.iyte.installmentor.database.entities.Card;
 
 public class CardRecyclerAdapter extends RecyclerView.Adapter<CardRecyclerAdapter.ViewHolder> {
@@ -36,7 +37,7 @@ public class CardRecyclerAdapter extends RecyclerView.Adapter<CardRecyclerAdapte
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        CardView v = (CardView) LayoutInflater.from(parent.getContext()).inflate(R.layout.card_cview, parent, false);
+        CardView v = (CardView) LayoutInflater.from(parent.getContext()).inflate(R.layout.card, parent, false);
         return new ViewHolder(v);
     }
 
