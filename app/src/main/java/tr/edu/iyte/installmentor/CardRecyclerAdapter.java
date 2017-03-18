@@ -59,7 +59,7 @@ public class CardRecyclerAdapter extends RecyclerView.Adapter<CardRecyclerAdapte
 
         switch(card.getType()) {
             case MASTER_CARD:
-                holder.cardLogo.setImageResource(R.mipmap.mclogo);
+                holder.cardLogo.setImageResource(R.mipmap.mastercardlogo);
                 break;
             case MAESTRO:
                 holder.cardLogo.setImageResource(R.mipmap.maestrologo);
@@ -67,6 +67,10 @@ public class CardRecyclerAdapter extends RecyclerView.Adapter<CardRecyclerAdapte
             case VISA:
                 holder.cardLogo.setImageResource(R.mipmap.visalogo);
                 break;
+            case DISCOVER:
+                holder.cardLogo.setImageResource(R.mipmap.discoverlogo);
+            case AMERICAN_EXPRESS:
+                holder.cardLogo.setImageResource(R.mipmap.amexlogo);
             default:
                 break;
         }
