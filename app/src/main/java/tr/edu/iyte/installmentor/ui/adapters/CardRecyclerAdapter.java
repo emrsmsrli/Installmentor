@@ -1,4 +1,4 @@
-package tr.edu.iyte.installmentor.ui;
+package tr.edu.iyte.installmentor.ui.adapters;
 
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;

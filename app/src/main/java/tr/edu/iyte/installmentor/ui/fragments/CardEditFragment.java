@@ -1,7 +1,6 @@
-package tr.edu.iyte.installmentor.ui;
+package tr.edu.iyte.installmentor.ui.fragments;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.annotation.Nullable;

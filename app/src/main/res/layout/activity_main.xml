@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clipToPadding="false"
-    tools:context="tr.edu.iyte.installmentor.ui.MainActivity">
+    tools:context="tr.edu.iyte.installmentor.ui.activities.MainActivity">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/card_recycler"
