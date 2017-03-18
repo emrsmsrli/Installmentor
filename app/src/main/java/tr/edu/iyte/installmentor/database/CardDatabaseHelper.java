@@ -197,15 +197,7 @@ public class CardDatabaseHelper extends SQLiteOpenHelper {
             while(productC.moveToNext()) {
                 Date d = DateFormatBuilder.parse(productC.getString(4));
                 Product p = new Product(productC.getLong(0), productC.getLong(1), productC.getLong(2), productC.getString(3), d);
-
-                try(Cursor installmentC = db.rawQuery(
-                        "SELECT SUM(" + INSTALLMENT_AMOUNT + ") " +
-                                "FROM " + INSTALLMENT_TABLE_NAME +
-                                " WHERE " + INSTALLMENT_PRODUCT_ID +" = " + p.getId() + ";", null)) {
-                    if(installmentC.moveToNext())
-                        p.setRemainingAmount(installmentC.getFloat(0));
-                }
-
+                p.setRemainingAmount(getSumOfInstallmentAmounts(p.getId()));
                 products.add(p);
             }
         }
@@ -220,15 +212,7 @@ public class CardDatabaseHelper extends SQLiteOpenHelper {
             while(productC.moveToNext()) {
                 Date d = DateFormatBuilder.parse(productC.getString(4));
                 Product p = new Product(productC.getLong(0), productC.getLong(1), productC.getLong(2), productC.getString(3), d);
-
-                try(Cursor installmentC = db.rawQuery(
-                        "SELECT SUM(" + INSTALLMENT_AMOUNT + ") " +
-                                "FROM " + INSTALLMENT_TABLE_NAME +
-                                " WHERE " + INSTALLMENT_PRODUCT_ID +" = " + p.getId() + ";", null)) {
-                    if(installmentC.moveToNext())
-                        p.setRemainingAmount(installmentC.getFloat(0));
-                }
-
+                p.setRemainingAmount(getSumOfInstallmentAmounts(p.getId()));
                 products.add(p);
             }
         }
@@ -310,25 +294,6 @@ public class CardDatabaseHelper extends SQLiteOpenHelper {
         return cv;
     }
 
-    private void openDatabase(final DatabaseOpenedListener listener) {
-        new AsyncTask<Void, Void, SQLiteDatabase>() {
-            @Override
-            protected SQLiteDatabase doInBackground(Void... params) {
-                return getWritableDatabase();
-            }
-
-            @Override
-            protected void onPostExecute(SQLiteDatabase sqLiteDatabase) {
-                if(sqLiteDatabase == null || !sqLiteDatabase.isOpen())
-                    Log.e(TAG, "openDatabase: Couldn't open database");
-                else
-                    db = sqLiteDatabase;
-
-                listener.onOpen(db != null);
-            }
-        }.execute();
-    }
-
     private void log(long i, Class<?> c, Mode mode) {
         String cn = c.getSimpleName();
         switch(mode) {
@@ -356,6 +321,37 @@ public class CardDatabaseHelper extends SQLiteOpenHelper {
             default:
                 break;
         }
+    }
+
+    private float getSumOfInstallmentAmounts(long pId) {
+        float r = 0;
+        try(Cursor installmentC = db.rawQuery(
+                "SELECT SUM(" + INSTALLMENT_AMOUNT + ") " +
+                        "FROM " + INSTALLMENT_TABLE_NAME +
+                        " WHERE " + INSTALLMENT_PRODUCT_ID +" = " + pId + ";", null)) {
+            if(installmentC.moveToNext())
+                r = installmentC.getFloat(0);
+        }
+        return r;
+    }
+
+    private void openDatabase(final DatabaseOpenedListener listener) {
+        new AsyncTask<Void, Void, SQLiteDatabase>() {
+            @Override
+            protected SQLiteDatabase doInBackground(Void... params) {
+                return getWritableDatabase();
+            }
+
+            @Override
+            protected void onPostExecute(SQLiteDatabase sqLiteDatabase) {
+                if(sqLiteDatabase == null || !sqLiteDatabase.isOpen())
+                    Log.e(TAG, "openDatabase: Couldn't open database");
+                else
+                    db = sqLiteDatabase;
+
+                listener.onOpen(db != null);
+            }
+        }.execute();
     }
 
     @Override
