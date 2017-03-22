@@ -320,7 +320,6 @@ public class CircularImageView extends android.support.v7.widget.AppCompatImageV
         return result + 2;
     }
 
-    // TODO: Update shadow layers based on border/selector state and visibility.
     private void updateShadow() {
         float radius = shadowEnabled ? shadowRadius : 0;
         //paint.setShadowLayer(radius, shadowDx, shadowDy, shadowColor);
