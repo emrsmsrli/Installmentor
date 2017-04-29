@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20dp"
+    android:id="@+id/card_edit_layout"
+    tools:context="tr.edu.iyte.installmentor.ui.activities.CardEditActivity">
+
+    <TextView
+        android:layout_marginTop="15dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:id="@+id/card_number_t"
+        android:text="Card number"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:layout_toEndOf="@id/card_number_t"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:id="@+id/card_number"
+        android:hint="1234 5678 5555 5555"
+        android:inputType="numberSigned"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_below="@id/card_number_t"
+        android:layout_marginTop="30dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:id="@+id/card_holder_t"
+        android:text="Card holder"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:layout_toEndOf="@id/card_holder_t"
+        android:layout_below="@id/card_number"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:id="@+id/card_holder"
+        android:hint="John Freddy"
+        android:inputType="text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_below="@id/card_holder_t"
+        android:layout_marginTop="30dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:id="@+id/bank_name_t"
+        android:text="Bank name"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:layout_toEndOf="@id/bank_name_t"
+        android:layout_below="@id/card_holder"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:id="@+id/bank_name"
+        android:hint="Golden Bank"
+        android:inputType="text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:layout_below="@id/bank_name"
+        android:layout_marginTop="15dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_alignParentEnd="true"
+        android:id="@+id/ok"
+        android:text="OK"
+        android:textColor="@color/colorPrimaryDark"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</RelativeLayout>
