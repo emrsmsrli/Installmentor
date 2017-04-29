@@ -17,6 +17,10 @@
         </activity>
         <activity android:name=".ui.activities.ProductsActivity">
         </activity>
+        <activity android:name=".ui.activities.CardEditActivity">
+        </activity>
+        <activity android:name=".ui.activities.ProductEditActivity">
+        </activity>
     </application>
 
 </manifest>
