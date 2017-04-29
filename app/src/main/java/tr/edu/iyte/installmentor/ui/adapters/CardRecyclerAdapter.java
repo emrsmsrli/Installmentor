@@ -1,8 +1,10 @@
 package tr.edu.iyte.installmentor.ui.adapters;
 
+import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -11,6 +13,7 @@ import java.util.List;
 
 import tr.edu.iyte.installmentor.R;
 import tr.edu.iyte.installmentor.database.entities.Card;
+import tr.edu.iyte.installmentor.ui.activities.ProductsActivity;
 
 public class CardRecyclerAdapter extends RecyclerView.Adapter<CardRecyclerAdapter.ViewHolder> {
 
@@ -37,18 +40,13 @@ public class CardRecyclerAdapter extends RecyclerView.Adapter<CardRecyclerAdapte
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        CardView v = (CardView) LayoutInflater.from(parent.getContext()).inflate(R.layout.card, parent, false);
+        CardView v = (CardView) LayoutInflater.from(parent.getContext()).inflate(R.layout.entity_card, parent, false);
         return new ViewHolder(v);
     }
 
     @Override
     public int getItemCount() {
         return cards.size();
-    }
-
-    public void addCard(Card card) {
-        cards.add(card);
-        notifyDataSetChanged();
     }
 
     @Override
@@ -70,10 +68,23 @@ public class CardRecyclerAdapter extends RecyclerView.Adapter<CardRecyclerAdapte
                 break;
             case DISCOVER:
                 holder.cardLogo.setImageResource(R.mipmap.discoverlogo);
+                break;
             case AMERICAN_EXPRESS:
                 holder.cardLogo.setImageResource(R.mipmap.amexlogo);
+                break;
             default:
                 break;
         }
+
+        final RecyclerView.ViewHolder h = holder;
+        final View holderView = holder.itemView;
+        holderView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(holderView.getContext(), ProductsActivity.class);
+                i.putExtra("cardid", h.getAdapterPosition());
+                holderView.getContext().startActivity(i);
+            }
+        });
     }
 }
