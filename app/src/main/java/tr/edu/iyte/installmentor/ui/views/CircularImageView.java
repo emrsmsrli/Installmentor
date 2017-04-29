@@ -1,4 +1,4 @@
-package tr.edu.iyte.installmentor.ui.customviews;
+package tr.edu.iyte.installmentor.ui.views;
 
 import android.content.Context;
 import android.content.res.TypedArray;
