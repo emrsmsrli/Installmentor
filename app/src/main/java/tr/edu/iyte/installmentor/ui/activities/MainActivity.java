@@ -1,5 +1,6 @@
-package tr.edu.iyte.installmentor.ui;
+package tr.edu.iyte.installmentor.ui.activities;
 
+import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,15 +9,16 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import java.util.List;
-import java.util.Random;
 
-import tr.edu.iyte.installmentor.CardRecyclerAdapter;
 import tr.edu.iyte.installmentor.database.CardDatabaseHelper;
 import tr.edu.iyte.installmentor.database.entities.Card;
 import tr.edu.iyte.installmentor.R;
+import tr.edu.iyte.installmentor.ui.adapters.CardRecyclerAdapter;
 
 public class MainActivity extends AppCompatActivity {
     private CardDatabaseHelper db = null;
+    private List<Card> cards;
+
     private FloatingActionButton fab;
     private View loading;
     private RecyclerView cardRecyclerView;
@@ -39,17 +41,19 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Card card = new Card(String.valueOf(new Random(System.currentTimeMillis()).nextInt()), "Emre", "Ininal");
-                db.addCard(card);
-                cardRecyclerAdapter.addCard(card);
+                startActivity(new Intent(MainActivity.this, CardEditActivity.class));
             }
         });
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
         db = new CardDatabaseHelper(this, new CardDatabaseHelper.DatabaseOpenedListener() {
             @Override
             public void onOpen(boolean success) {
                 if(success) {
-                    List<Card> cards = db.getAllCards();
+                    cards = db.getAllCards();
                     layoutManager = new LinearLayoutManager(MainActivity.this);
                     cardRecyclerAdapter = new CardRecyclerAdapter(cards);
                     cardRecyclerView.setLayoutManager(layoutManager);
